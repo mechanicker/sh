@@ -252,7 +252,7 @@ For more information, see 'man shfmt' and https://github.com/mvdan/sh.
 	}
 	status := 0
 	for _, path := range flag.Args() {
-		if info, err := os.Stat(path); err == nil && !info.IsDir() && !find.val {
+		if info, err := os.Stat(path); err == nil && !info.IsDir() && info.Mode()&os.ModeSymlink != 0 && !find.val {
 			// When given paths to files directly, always format
 			// them, no matter their extension or shebang.
 			//
